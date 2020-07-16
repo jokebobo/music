@@ -36,8 +36,15 @@ app.get('/test', function (req, res) {
 })
 app.get('/music', async function (req, res) {
   console.log("获取传递参数", req.query);
-
-  res.send(await musiclist.find().where({ id: req.query.id }));
+  if(req.query.id){
+    // 如果存在id 则返回对应数据
+    res.send(await musiclist.find().where({ id: req.query.id }));
+  }
+  if(req.query.all){
+    // 不存在返回所有数据
+    res.send(await musiclist.find());
+  }
+  
 })
 app.post('/test1', function (req, res) {
   console.log("获取参数", req.body);
